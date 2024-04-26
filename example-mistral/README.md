@@ -10,9 +10,42 @@ Image
 * Downloaded from Hugging Face
   https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/blob/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
 
+## Local Execution (direct without docker)
+### Installation
+  ```
+  python -m venv venv
+  source venv/bin/activate
+  pip3 install llama-cpp-python --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+  
+  # using requirements.txt
+  pip3 install -r requirements.txt
+  ```
+**Note** on PyCharm: 
+* PyCharm can't handle installation pip installations using index urls (Support --index-url in requirements files : PY-23559[[youtrack.jetbrains.com](https://youtrack.jetbrains.com/issue/PY-23559)]). Hence direct installation above into the virtual environment is recommended.
+* How To Setup Virtual Environment in PyCharm | pycharm venv[[www.cybrosys.com](https://www.cybrosys.com/blog/how-to-setup-virtual-environment-in-pycharm)]
 
-## Building the Image
-Building and Running both worked on old mac but took several minutes (20+ minutes approximately)
+### Execution in IDE/PyCharm
+Run test.py. (Took 40+ minutes to complete but worked)
+
+### Note on pip installation
+Direct installation which does the building locally failed, potentially due to outdated libraries on the mac. Hence, installing prebuilt binary above.  
+```
+  pip3 install llama-cpp-python
+  ```
+  Gives errors
+  ```
+  ERROR: Failed building wheel for llama-cpp-python
+  if ([ctx->device supportsFamily:MTLGPUFamilyApple7] &&
+  use of undeclared identifier 'MTLGPUFamilyApple7'; did you mean 'MTLGPUFamilyMetal3'?
+  ..
+  ```
+  * Failed building ggml-metal.m with error "use of undeclared identifier MTLGPUFamilyApple7" · Issue #3962 · ggerganov/llama.cpp · GitHub[[github.com](https://github.com/ggerganov/llama.cpp/issues/3962)]
+  	This issue is occurring because your CommandLineTools are out of date:
+    /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks
+
+
+## Local Execution with Docker
+Building and Running both worked on an old mac but took several minutes (20+ minutes approximately)
 ```
 | => docker build . -t llama-cpp-mistral:2
 ```
@@ -136,5 +169,5 @@ llama_print_timings:       total time = 1915566.08 ms /   259 tokens
 * How to run Llama 2 locally on CPU + serving it as a Docker container | by Nikolay Penkov | Medium[[medium.com](https://medium.com/@penkow/how-to-run-llama-2-locally-on-cpu-docker-image-731eae6398d1)]
 * https://github.com/abetlen/llama-cpp-python
   - Packages & Image: https://github.com/abetlen/llama-cpp-python/pkgs/container/llama-cpp-python
-* https://python.langchain.com/docs/integrations/llms/llamacpp/  
+* https://python.langchain.com/docs/integrations/llms/llamacpp/
 * https://github.com/ggerganov/llama.cpp

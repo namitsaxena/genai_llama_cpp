@@ -1,11 +1,26 @@
 from llama_cpp import Llama
+import os.path
 
 # Put the location of to the GGUF model that you've download from HuggingFace here
-model_path = "mistral-7b-instruct-v0.2.Q4_K_M.gguf"
-# model_path = "kimiko-mistral-7b.Q2_K.gguf"
+model_name = "mistral-7b-instruct-v0.2.Q4_K_M.gguf"
+model_dir = "../models"
+
+# determine path for the model file, both
+# for running in Docker(same dir) and
+# for running in IDE (under separate dir)
+model_path = None
+if os.path.isfile(model_name):
+    model_path = model_name
+elif os.path.isfile(model_dir + '/' + model_name):
+    model_path = model_dir + '/' + model_name
+else:
+    print(f"Failed to find the model file for model: {model_name}")
+    exit(1)
+
+print(f"model file found at {model_path}")
 
 # Create a llama model
-model = Llama(model_path=model_path)
+model = Llama(model_path)
 
 # Prompt creation
 system_message = "You are a helpful software developer"
