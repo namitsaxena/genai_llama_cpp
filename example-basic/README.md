@@ -12,7 +12,8 @@ Image
   - https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/blob/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
     - Takes 30-40mins to respond run locally
   - https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v0.3-GGUF/blob/main/tinyllama-1.1b-chat-v0.3.Q2_K.gguf
-    - Takes a couple of seconds (less than a minute) to respond run locally
+    - Takes a couple of seconds (25-35s, less than a minute) to respond run locally
+    - in one instance, it just changed the question and answered it (asked for pancake recipe but it confirmed and gave recipe for a pizza)
 
 ## Local Execution (direct without docker)
 ### Installation
