@@ -1,14 +1,18 @@
 # Running LLMs locally using Docker and llama-cpp
+This contains sample code for running models locally using llama-cpp-python ; includes both direct python and docker examples. The sample code only takes a hardcoded prompt which is run and then it exits. (there's no webserver/api support)
+
+## Status
+* Both direct python(pip dependency) execution and docker execution sucessfully tested locally on mac using mistral and tinyllama models given below. 
 
 ## llama-cpp-python
 llama-cpp-python is a Python binding for llama.cpp. It supports inference for many LLMs models, which can be accessed on Hugging Face. This notebook goes over how to run llama-cpp-python within LangChain. Note: new versions of llama-cpp-python use GGUF model files [[python.langchain.com](https://python.langchain.com/docs/integrations/llms/llamacpp/)]
 
-Installing llama-cpp locally
-* llama-cpp-python couldn't be installed on mac directly (due to missing libraries probably)
-
 Image 
 * Downloaded from Hugging Face
-  https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/blob/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
+  - https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/blob/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
+    - Takes 30-40mins to respond run locally
+  - https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v0.3-GGUF/blob/main/tinyllama-1.1b-chat-v0.3.Q2_K.gguf
+    - Takes a couple of seconds (less than a minute) to respond run locally
 
 ## Local Execution (direct without docker)
 ### Installation
@@ -171,3 +175,6 @@ llama_print_timings:       total time = 1915566.08 ms /   259 tokens
   - Packages & Image: https://github.com/abetlen/llama-cpp-python/pkgs/container/llama-cpp-python
 * https://python.langchain.com/docs/integrations/llms/llamacpp/
 * https://github.com/ggerganov/llama.cpp
+* Llama.cpp Tutorial: A Complete Guide to Efficient LLM Inference and Implementation | DataCamp[[www.datacamp.com](https://www.datacamp.com/tutorial/llama-cpp-tutorial)]
+* model quantization sources (creating gguf's)
+ - https://huggingface.co/TheBloke

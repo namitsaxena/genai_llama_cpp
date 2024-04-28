@@ -2,7 +2,7 @@ from llama_cpp import Llama
 import os.path
 
 # Put the location of to the GGUF model that you've download from HuggingFace here
-model_name = "mistral-7b-instruct-v0.2.Q4_K_M.gguf"
+model_name = "tinyllama-1.1b-chat-v0.3.Q2_K.gguf"
 model_dir = "../models"
 
 # determine path for the model file, both
@@ -23,8 +23,11 @@ print(f"model file found at {model_path}")
 model = Llama(model_path)
 
 # Prompt creation
-system_message = "You are a helpful software developer"
-user_message = "What do you know about BPMN 2.0 and Imixs-Workflow?"
+# system_message = "You are a helpful software developer"
+# user_message = "Hello! Can you write a 300 word abstract for a research paper I need to write about the impact of AI on society?"
+
+system_message = "You are a chef"
+user_message = "Give me an easy and detailed recipe for making pancakes."
 
 prompt = f"""<s>[INST] <<SYS>>
 {system_message}
