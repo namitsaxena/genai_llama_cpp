@@ -169,6 +169,32 @@ llama_print_timings:       total time = 1915566.08 ms /   259 tokens
 {'id': 'cmpl-8744a3b0-dd3c-49e1-b532-41111de801ad', 'object': 'text_completion', 'created': 1713499720, 'model': 'mistral-7b-instruct-v0.2.Q4_K_M.gguf', 'choices': [{'text': "<s>[INST] <<SYS>>\nYou are a helpful software developer\n<</SYS>>\nWhat do you know about BPMN 2.0 and Imixs-Workflow? [/INST] BPMN 2.0, or Business Process Model and Notation Version 2.0, is an standardized graphical notation for modeling business processes. It provides a common language for business analysts and technical developers to design, document, and execute business processes. With BPMN 2.0, it's possible to create complex process models with various elements like activities, gateways, events, pools, lanes, and connectors.\n\nImixs-Workflow is an open-source workflow engine based on the BPMN 2.0 standard. It offers a modular design for managing business processes, forms, document handling, and human interaction in Java EE applications. Imixs-Workflow enables you to model, execute, and monitor your business processes using BPMN diagrams, making it easier for organizations to automate their workflows and streamline their operations. Additionally, it supports integration with various databases, document management systems, and other external systems through APIs or plugins.", 'index': 0, 'logprobs': None, 'finish_reason': 'stop'}], 'usage': {'prompt_tokens': 45, 'completion_tokens': 214, 'total_tokens': 259}}
 ```
 
+## LLaMA.cpp HTTP Server Execution
+* The docker image has been updated with llama.cpp http server for directly serving the model as an api. This includes installation and serving the model.
+* The image can be run as (see Dockerfile for the models gguf's that have been added to the image):
+  ```
+  docker run -it -p 8000:8000 llama-cpp-mistral:3
+  docker run -it -p 8000:8000 llama-cpp-mistral:3 tinyllama-1.1b-chat-v0.3.Q2_K.gguf
+  ```
+  Or from inside the container as:
+  ```
+  docker run --rm -it --entrypoint bash llama-cpp-mistral:3
+  python3 -m llama_cpp.server --model mistral-7b-instruct-v0.2.Q4_K_M.gguf --port 8001 --host 0.0.0.0
+  ```
+  Note:
+  - if host is not specified, the we get the following error (with whatver port we decide to run):
+    ```
+    ERROR:    [Errno 99] error while attempting to bind on address ('::1', 80, 0, 0): cannot assign requested address
+    INFO:     Waiting for application shutdown.
+    ```
+  - default port is 8000
+* Accessing the server
+  - Swagger endpoint can be accessed via /docs http://localhost:8000/docs (api can be executed directly from it)
+  - The api uses openAI specification
+* References:
+  - https://github.com/ggerganov/llama.cpp/blob/master/examples/server/README.md
+  - Using llama-cpp-python server with LangChain - Martin's website/blog thingy[[clehaxze.tw](https://clehaxze.tw/gemlog/2023/09-25-using-llama-cpp-python-server-with-langchain.gmi)]
+
 ## References
 * How to Run LLMs in a Docker Container - Ralph's Open Source Blog[[ralph.blog.imixs.com](https://ralph.blog.imixs.com/2024/03/19/how-to-run-llms-in-a-docker-container/)]
 * How to run Llama 2 locally on CPU + serving it as a Docker container | by Nikolay Penkov | Medium[[medium.com](https://medium.com/@penkow/how-to-run-llama-2-locally-on-cpu-docker-image-731eae6398d1)]
